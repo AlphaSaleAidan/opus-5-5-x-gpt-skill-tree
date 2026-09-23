@@ -1,0 +1,208 @@
+<!--
+  Demo Shell — design-motion-principles v2.1
+  ===========================================
+
+  This file is a template the audit agent reads during STEP 3 of the
+  audit workflow (see ../SKILL.md). The agent embeds one .demo-card per
+  Critical or Important finding (per R4 in the plan — Opportunities do
+  not get demo cards).
+
+  How to use this file as the agent
+  ---------------------------------
+  1. Copy the entire <style> block into the report's <head>. The shell's
+     CSS variables, .demo-card layout, loop indicator, and the
+     prefers-reduced-motion guard are shared across all demo cards in
+     the report — they are not duplicated per finding.
+
+  2. For each finding {n} (1-indexed across the whole report):
+     a. Replace the MOTION-CODE-SLOT-{n} comment in <style> with the
+        per-finding @keyframes block AND any .demo-card-{n}__motion-target
+        selector rules. Use the suffix {n} so multiple findings in one
+        report do not collide on keyframe names or target selectors.
+     b. Replace the DEMO-CARD-MOTION-SLOT-{n} comment in the .demo-card
+        markup with the actual motion-target element. Its class must be
+        .demo-card-{n}__motion-target so it matches the rules above.
+     c. Set the .demo-card__header text to a short title for the
+        recommended motion (e.g., "Subtle enter: opacity + translateY + blur").
+     d. Set the .demo-card__subhead text to the duration plus easing or
+        other relevant values (e.g., "300ms · ease-out"). The subhead
+        ALWAYS renders — the agent populates it for every demo so card
+        heights stay consistent across the report.
+
+  3. Per-finding code MUST honor these contracts:
+     - Do not redefine the shell's CSS variables (--bg, --fg, --border,
+       --accent, --loop-dim, --card-radius, --card-padding, --gap,
+       --sans, --mono). Use them via var().
+     - Do not modify the prefers-reduced-motion block. The shell's
+       guard collapses all .demo-card-{n}__motion-target animations to
+       none. The per-finding @keyframes 100% state must match the
+       motion-target's default rendered state so the reduce-motion
+       fallback shows the correct final visual.
+     - Per-finding @keyframes use the 0% / 66% / 100% cadence:
+       0% = start state, 66% = motion complete (~2s in), 100% = hold
+       (~1s). The shell uses animation-duration: 3s.
+
+  4. Demo cards are non-interactive. They have no hover or focus state
+     beyond the default outline suppression. tabindex="-1" keeps them
+     out of keyboard nav order — readers tab through findings, not
+     through demo cards.
+
+  Loop pacing
+  -----------
+  animation-duration: 3s. Keyframes 0% / 66% / 100%. Motion 0-66% = ~2s,
+  hold 66-100% = ~1s, then the animation restarts. Per-finding code
+  imitates this cadence so all demos in a report share the same rhythm.
+
+  Empty state (this file rendered standalone)
+  -------------------------------------------
+  Opening this file directly in a browser shows one .demo-card with the
+  loop indicator and placeholder content. No motion plays — the agent
+  injects motion per finding when this template is embedded in a report.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo Shell — design-motion-principles</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --border: #e5e5e5;
+      --accent: #111111;
+      --loop-dim: rgba(0, 0, 0, 0.45);
+      --card-radius: 12px;
+      --card-padding: 20px;
+      --gap: 12px;
+      --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+      --mono: ui-monospace, "SF Mono", Menlo, monospace;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1a1a1a;
+        --fg: #f0f0f0;
+        --border: #333333;
+        --accent: #f0f0f0;
+        --loop-dim: rgba(240, 240, 240, 0.45);
+      }
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--sans);
+      margin: 0;
+      padding: 32px;
+    }
+
+    .demo-card {
+      position: relative;
+      background: var(--bg);
+      color: var(--fg);
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+      padding: var(--card-padding);
+      max-width: 360px;
+      min-width: 280px;
+      font-family: var(--sans);
+      outline: none;
+    }
+
+    .demo-card:focus-visible {
+      outline: none;
+    }
+
+    .demo-card__header {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--fg);
+      margin-bottom: 4px;
+      padding-right: 72px;
+    }
+
+    .demo-card__subhead {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--loop-dim);
+      margin-bottom: var(--gap);
+    }
+
+    .demo-card__stage {
+      background: var(--bg);
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .demo-card__loop-indicator {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--loop-dim);
+      letter-spacing: 0.02em;
+      user-select: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .demo-card__loop-indicator {
+        display: none;
+      }
+      [class*="__motion-target"] {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    /* MOTION-CODE-SLOT-{n}
+       Per-finding @keyframes and .demo-card-{n}__motion-target rules
+       go here. {n} = finding's 1-indexed position across the report.
+
+       Example shape (replace per finding):
+
+       @keyframes motion-1-enter {
+         0%   { opacity: 0; transform: translateY(8px); filter: blur(4px); }
+         66%  { opacity: 1; transform: translateY(0);   filter: blur(0);  }
+         100% { opacity: 1; transform: translateY(0);   filter: blur(0);  }
+       }
+       .demo-card-1__motion-target {
+         animation: motion-1-enter 3s infinite;
+         display: inline-block;
+         padding: 8px 16px;
+         border-radius: 6px;
+         background: var(--accent);
+         color: var(--bg);
+         font-family: var(--sans);
+       }
+    */
+  </style>
+</head>
+<body>
+
+  <article class="demo-card" tabindex="-1">
+    <div class="demo-card__loop-indicator">↻ looping</div>
+    <div class="demo-card__header">Recommended motion title</div>
+    <div class="demo-card__subhead">300ms · ease-out</div>
+    <div class="demo-card__stage">
+      <!-- DEMO-CARD-MOTION-SLOT-{n}
+           Per-finding motion-target element goes here. Its class must
+           match the rules in MOTION-CODE-SLOT-{n} above:
+             <div class="demo-card-{n}__motion-target">...</div>
+           The element's contents are agent-determined (a button shape,
+           a card, an icon, a list of items for stagger demos, etc.). -->
+      <span style="color: var(--loop-dim); font-family: var(--mono); font-size: 0.75rem;">
+        (motion preview renders here per finding)
+      </span>
+    </div>
+  </article>
+
+</body>
+</html>
