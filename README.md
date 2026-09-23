@@ -4,7 +4,7 @@
 
 **A multi-model routing playbook for Claude Code and OpenAI Codex.** Claude Opus 5.5 is the
 flagship lead, Fable writes the markdown handoff briefs, and each build goes to the GPT-6
-model that fits the job: **GPT-6 Astra**, **GPT-6 Sol** or **GPT-6 Luna**. It ships **preloaded with 333 skills** (216 included, the rest one command away), a skill
+model that fits the job: **GPT-6 Astra**, **GPT-6 Sol** or **GPT-6 Luna**. It ships **preloaded with 348 skills** (216 included, the rest one command away), a skill
 router, a routing table, a `/codex` dispatch skill and an `AGENTS.md` template. Drop
 them into `~/.claude` and `~/.codex`, and every agent session will pick the same skill and
 model for the same kind of task.
@@ -33,7 +33,8 @@ Unsure → Sol; escalate to Astra after two misses on the same symptom.
 | [`SKILL-ROUTER.md`](SKILL-ROUTER.md) | Use-case → engine and use-case → skill decision tables for Claude Code and Codex agents |
 | [`ROUTING.md`](ROUTING.md) | Who does what, model-pick rules, reasoning effort, the Fable → GPT → Opus handoff loop |
 | [`skills/`](skills/) | 216 ready-to-use skills, each with its upstream license — see the catalog below |
-| [`install.sh`](install.sh) | One command: installs all 333 skills for Claude Code and Codex |
+| [`install.sh`](install.sh) | One command: installs all 348 skills for Claude Code and Codex |
+| [`scripts/codex_curate.py`](scripts/codex_curate.py) | Gives GPT the builder skills (incl. Claude plugin skills) and switches off strategy/marketing ones — Codex's skill list has a fixed text budget, so ~145 focused skills beat 300 unreadable ones |
 | [`skills/codex/SKILL.md`](skills/codex/SKILL.md) | Claude Code skill that dispatches `codex exec -m <model>` with a brief, then verifies |
 | [`templates/AGENTS.md`](templates/AGENTS.md) | Standing instructions for the GPT builder (`~/.codex/AGENTS.md`) |
 
@@ -42,7 +43,7 @@ Unsure → Sol; escalate to Astra after two misses on the same symptom.
 ```bash
 git clone https://github.com/AlphaSaleAidan/opus-5-5-x-gpt-skill-tree
 cd opus-5-5-x-gpt-skill-tree
-./install.sh                                        # all 333 skills → ~/.claude/skills + ~/.agents/skills
+./install.sh                                        # all 348 skills → ~/.claude/skills + ~/.agents/skills
 cp SKILL-ROUTER.md ROUTING.md ~/.claude/
 cp templates/AGENTS.md ~/.codex/AGENTS.md           # review before overwriting your own
 npm i -g @openai/codex@latest && codex debug models # confirm gpt-6-sol / gpt-6-luna are listed
@@ -66,9 +67,9 @@ codex exec -m gpt-6-sol -c model_reasoning_effort=medium -C ./app -s workspace-w
 - **Quality:** the builder never reviews its own work. Opus verifies, and Astra does the adversarial review on money-path diffs.
 - **Consistency:** Claude and GPT read the same skill router, so the same task always gets the same skill.
 
-## Skill catalog — 333 skills
+## Skill catalog — 348 skills
 
-**216 are included in [`skills/`](skills/)** (MIT / Apache-2.0, each with its upstream license) and **117 install from their official source** with `./install.sh` (their licenses don't allow redistribution, or they ship as Claude Code plugins). One command gives you the whole tree:
+**216 are included in [`skills/`](skills/)** (MIT / Apache-2.0, each with its upstream license) and **132 install from their official source** with `./install.sh` (their licenses don't allow redistribution, or they ship as Claude Code plugins). One command gives you the whole tree:
 
 ```bash
 ./install.sh          # copies skills/ into ~/.claude/skills + ~/.agents/skills, then installs the rest
@@ -111,7 +112,7 @@ codex exec -m gpt-6-sol -c model_reasoning_effort=medium -C ./app -s workspace-w
 
 </details>
 
-<details><summary><b>browser-use/video-use</b> — 1 skill · included</summary>
+<details><summary><b>browser-use/video-use</b> — 1 skills · included</summary>
 
 | Skill | What it does |
 |---|---|
@@ -220,7 +221,7 @@ codex exec -m gpt-6-sol -c model_reasoning_effort=medium -C ./app -s workspace-w
 
 </details>
 
-<details><summary><b>kylezantos/design-motion-principles</b> — 1 skill · included</summary>
+<details><summary><b>kylezantos/design-motion-principles</b> — 1 skills · included</summary>
 
 | Skill | What it does |
 |---|---|
@@ -228,7 +229,7 @@ codex exec -m gpt-6-sol -c model_reasoning_effort=medium -C ./app -s workspace-w
 
 </details>
 
-<details><summary><b>latent-spaces/brag</b> — 1 skill · included</summary>
+<details><summary><b>latent-spaces/brag</b> — 1 skills · included</summary>
 
 | Skill | What it does |
 |---|---|
@@ -332,7 +333,7 @@ codex exec -m gpt-6-sol -c model_reasoning_effort=medium -C ./app -s workspace-w
 
 </details>
 
-<details><summary><b>pbakaus/impeccable</b> — 1 skill · included</summary>
+<details><summary><b>pbakaus/impeccable</b> — 1 skills · included</summary>
 
 | Skill | What it does |
 |---|---|
@@ -407,7 +408,7 @@ codex exec -m gpt-6-sol -c model_reasoning_effort=medium -C ./app -s workspace-w
 
 </details>
 
-<details><summary><b>this repo (Aidan Pierce)</b> — 1 skill · included</summary>
+<details><summary><b>this repo (Aidan Pierce)</b> — 1 skills · included</summary>
 
 | Skill | What it does |
 |---|---|
@@ -415,7 +416,7 @@ codex exec -m gpt-6-sol -c model_reasoning_effort=medium -C ./app -s workspace-w
 
 </details>
 
-<details><summary><b>vercel-labs/agent-browser</b> — 1 skill · included</summary>
+<details><summary><b>vercel-labs/agent-browser</b> — 1 skills · included</summary>
 
 | Skill | What it does |
 |---|---|
@@ -433,7 +434,7 @@ codex exec -m gpt-6-sol -c model_reasoning_effort=medium -C ./app -s workspace-w
 
 </details>
 
-<details><summary><b>claude-md-management@claude-plugins-official</b> — 1 skill · Claude Code plugin</summary>
+<details><summary><b>claude-md-management@claude-plugins-official</b> — 1 skills · Claude Code plugin</summary>
 
 | Skill | What it does |
 |---|---|
@@ -441,7 +442,7 @@ codex exec -m gpt-6-sol -c model_reasoning_effort=medium -C ./app -s workspace-w
 
 </details>
 
-<details><summary><b>hookify@claude-plugins-official</b> — 1 skill · Claude Code plugin</summary>
+<details><summary><b>hookify@claude-plugins-official</b> — 1 skills · Claude Code plugin</summary>
 
 | Skill | What it does |
 |---|---|
@@ -482,6 +483,28 @@ codex exec -m gpt-6-sol -c model_reasoning_effort=medium -C ./app -s workspace-w
 
 </details>
 
+<details><summary><b>openai/skills (Codex)</b> — 15 skills · installs from source</summary>
+
+| Skill | What it does |
+|---|---|
+| `chatgpt-apps` | Build, scaffold, refactor, and troubleshoot ChatGPT Apps SDK applications that combine an MCP server and widget UI. |
+| `cli-creator` | Build a composable CLI for Codex from API docs, an OpenAPI spec, existing curl examples, an SDK, a web app, an admin … |
+| `define-goal` | Help the user define a concrete, measurable goal before starting work, especially when they ask to use the goal tool,… |
+| `gh-address-comments` | Help address review/issue comments on the open GitHub PR for the current branch using gh CLI; verify gh auth first an… |
+| `gh-fix-ci` | Use when a user asks to debug or fix failing GitHub PR checks that run in GitHub Actions; use `gh` to inspect checks … |
+| `jupyter-notebook` | Use when the user asks to create, scaffold, or edit Jupyter notebooks (`.ipynb`) for experiments, explorations, or tu… |
+| `playwright` | Use when the task requires automating a real browser from the terminal (navigation, form filling, snapshots, screensh… |
+| `playwright-interactive` | Persistent browser and Electron interaction through `js_repl` for fast iterative UI debugging. |
+| `render-deploy` | Deploy applications to Render by analyzing codebases, generating render.yaml Blueprints, and providing Dashboard deep… |
+| `screenshot` | Use when the user explicitly asks for a desktop or system screenshot (full screen, specific app or window, or a pixel… |
+| `security-best-practices` | Perform language and framework specific security best-practice reviews and suggest improvements. |
+| `security-ownership-map` | Analyze git repositories to build a security ownership topology (people-to-file), compute bus factor and sensitive-co… |
+| `security-threat-model` | Repository-grounded threat modeling that enumerates trust boundaries, assets, attacker capabilities, abuse paths, and… |
+| `speech` | Use when the user asks for text-to-speech narration or voiceover, accessibility reads, audio prompts, or batch speech… |
+| `transcribe` | Transcribe audio files to text with optional diarization and known-speaker hints. |
+
+</details>
+
 <details><summary><b>ponytail (claude.ai plugin directory)</b> — 6 skills · Claude Code plugin</summary>
 
 | Skill | What it does |
@@ -514,7 +537,7 @@ codex exec -m gpt-6-sol -c model_reasoning_effort=medium -C ./app -s workspace-w
 
 </details>
 
-<details><summary><b>session-report@claude-plugins-official</b> — 1 skill · Claude Code plugin</summary>
+<details><summary><b>session-report@claude-plugins-official</b> — 1 skills · Claude Code plugin</summary>
 
 | Skill | What it does |
 |---|---|
@@ -623,7 +646,7 @@ codex exec -m gpt-6-sol -c model_reasoning_effort=medium -C ./app -s workspace-w
 
 </details>
 
-<details><summary><b>watch@claude-video</b> — 1 skill · Claude Code plugin</summary>
+<details><summary><b>watch@claude-video</b> — 1 skills · Claude Code plugin</summary>
 
 | Skill | What it does |
 |---|---|

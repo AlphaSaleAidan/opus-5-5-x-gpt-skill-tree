@@ -42,3 +42,7 @@ commerce (GPT refuses at policy level).
 Astra-only sprints burn the Codex usage cap fast. Sol/Luna exist to carry volume —
 don't send grind to astra. Two consecutive usage-limit ERRORs = real cap; fall back to
 Opus/Sonnet subagents and tell the human.
+
+## Skill budget (Codex)
+Codex fits every skill description into a fixed-size list: 299 skills cut each to ~14 chars,
+~145 keeps ~98. Rerun `codex_curate.py` after adding skills; check with `codex debug prompt-input`.

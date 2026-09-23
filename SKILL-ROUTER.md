@@ -20,6 +20,22 @@ All see these skills. Pick rules + handoff: [`ROUTING.md`](ROUTING.md).
 | Nicotine / vape / age-restricted commerce | **Opus 5.5** builds (GPT refuses) |
 | Verify a lane's output, read logs | Sonnet 5 subagent |
 
+## GPT builders — skills Codex loads (curated to ~145 so descriptions stay readable)
+| Builder job | Skill(s) Codex should load |
+|---|---|
+| Design image → working page | `taste-skill:image-to-code` + one register (`soft-skill` / `minimalist-skill` / `brutalist-skill`) + `impeccable` audit |
+| Fix failing CI / address PR review comments | `gh-fix-ci` / `gh-address-comments` |
+| Prove it renders (sandbox can't always launch Chromium) | `playwright` / `playwright-interactive` / `screenshot` |
+| Money-path or auth review | `security-threat-model` + `security-best-practices` (+ `security-review`) |
+| HTML-first video / launch clip | `hyperframes:*` (core, animation, cli, product-launch-video, motion-graphics) or `remotion-*` |
+| Next.js / Vercel / AI SDK build | `vercel:nextjs`, `vercel:ai-sdk`, `vercel:vercel-functions`, `vercel:shadcn` |
+| Stripe integration | `stripe:stripe-best-practices` |
+| Deploy to Render / new CLI tool / ChatGPT app | `render-deploy` / `cli-creator` / `chatgpt-apps` |
+| Speech, transcription, notebooks | `speech` / `transcribe` / `jupyter-notebook` (metered OpenAI calls → cost OK first) |
+| Keep the diff small | `ponytail:ponytail` / `ponytail:ponytail-review` |
+Strategy, marketing, SEO analysis, Vapi, Shippo and n8n skills are switched OFF for Codex
+(`scripts/codex_curate.py`) — that work stays with Opus.
+
 ## Use-case → skill
 
 | You are doing… | Skill(s) |
