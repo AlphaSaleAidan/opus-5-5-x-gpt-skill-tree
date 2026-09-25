@@ -4,7 +4,7 @@
 
 **A multi-model routing playbook for Claude Code and OpenAI Codex.** Claude Opus 5.5 is the
 flagship lead, Fable writes the markdown handoff briefs, and each build goes to the GPT-6
-model that fits the job: **GPT-6 Astra**, **GPT-6 Sol** or **GPT-6 Luna**. It ships **preloaded with 348 skills** (216 included, the rest one command away), a skill
+model that fits the job: **GPT-6 Astra**, **GPT-6 Sol** or **GPT-6 Luna**. It ships **preloaded with 361 skills** (229 included, the rest one command away), a skill
 router, a routing table, a `/codex` dispatch skill and an `AGENTS.md` template. Drop
 them into `~/.claude` and `~/.codex`, and every agent session will pick the same skill and
 model for the same kind of task.
@@ -32,8 +32,8 @@ Unsure → Sol; escalate to Astra after two misses on the same symptom.
 |---|---|
 | [`SKILL-ROUTER.md`](SKILL-ROUTER.md) | Use-case → engine and use-case → skill decision tables for Claude Code and Codex agents |
 | [`ROUTING.md`](ROUTING.md) | Who does what, model-pick rules, reasoning effort, the Fable → GPT → Opus handoff loop |
-| [`skills/`](skills/) | 216 ready-to-use skills, each with its upstream license — see the catalog below |
-| [`install.sh`](install.sh) | One command: installs all 348 skills for Claude Code and Codex |
+| [`skills/`](skills/) | 229 ready-to-use skills, each with its upstream license — see the catalog below |
+| [`install.sh`](install.sh) | One command: installs all 361 skills for Claude Code and Codex |
 | [`scripts/codex_curate.py`](scripts/codex_curate.py) | Gives GPT the builder skills (incl. Claude plugin skills) and switches off strategy/marketing ones — Codex's skill list has a fixed text budget, so ~145 focused skills beat 300 unreadable ones |
 | [`skills/codex/SKILL.md`](skills/codex/SKILL.md) | Claude Code skill that dispatches `codex exec -m <model>` with a brief, then verifies |
 | [`templates/AGENTS.md`](templates/AGENTS.md) | Standing instructions for the GPT builder (`~/.codex/AGENTS.md`) |
@@ -43,7 +43,7 @@ Unsure → Sol; escalate to Astra after two misses on the same symptom.
 ```bash
 git clone https://github.com/AlphaSaleAidan/opus-5-5-x-gpt-skill-tree
 cd opus-5-5-x-gpt-skill-tree
-./install.sh                                        # all 348 skills → ~/.claude/skills + ~/.agents/skills
+./install.sh                                        # all 361 skills → ~/.claude/skills + ~/.agents/skills
 cp SKILL-ROUTER.md ROUTING.md ~/.claude/
 cp templates/AGENTS.md ~/.codex/AGENTS.md           # review before overwriting your own
 npm i -g @openai/codex@latest && codex debug models # confirm gpt-6-sol / gpt-6-luna are listed
@@ -67,9 +67,9 @@ codex exec -m gpt-6-sol -c model_reasoning_effort=medium -C ./app -s workspace-w
 - **Quality:** the builder never reviews its own work. Opus verifies, and Astra does the adversarial review on money-path diffs.
 - **Consistency:** Claude and GPT read the same skill router, so the same task always gets the same skill.
 
-## Skill catalog — 348 skills
+## Skill catalog — 361 skills
 
-**216 are included in [`skills/`](skills/)** (MIT / Apache-2.0, each with its upstream license) and **132 install from their official source** with `./install.sh` (their licenses don't allow redistribution, or they ship as Claude Code plugins). One command gives you the whole tree:
+**229 are included in [`skills/`](skills/)** (MIT / Apache-2.0, each with its upstream license) and **132 install from their official source** with `./install.sh` (their licenses don't allow redistribution, or they ship as Claude Code plugins). One command gives you the whole tree:
 
 ```bash
 ./install.sh          # copies skills/ into ~/.claude/skills + ~/.agents/skills, then installs the rest
@@ -408,11 +408,24 @@ codex exec -m gpt-6-sol -c model_reasoning_effort=medium -C ./app -s workspace-w
 
 </details>
 
-<details><summary><b>this repo (Aidan Pierce)</b> — 1 skills · included</summary>
+<details><summary><b>this repo (Aidan Pierce)</b> — 14 skills · included</summary>
 
 | Skill | What it does |
 |---|---|
+| `ai-video-logo-replace` | Swap a wrong printed logo on an AI-generated clip without regenerating: HSV detect, track, inpaint, multiply-blend. |
+| `beat-synced-overlays` | Kick-onset scored flash frames, double exposures and ghost overlays for music-driven montages. |
+| `blender-set-from-storyboard` | Build a Blender set from storyboard panels: cameras "relatively close", continuity checks, depth passes, browser tour. |
 | `codex` | Hand a build, refactor, test, or review task to a GPT model via Codex — gpt-6-astra (hard/design builds + money-path … |
+| `commercial-production-pipeline` | Client commercial end to end: brief, storyboard sign-off, build, fresh-eyes QC, review loops, delivery rules. |
+| `credit-discipline-for-generation` | Storyboard and quote before spend, cheapest probe first, stills before video, log every generation job. |
+| `edit-rebuild-from-clean-sources` | Rebuild a fan edit from clean sources: sample-accurate music sync, cadence map, per-section grade, jitter-free framing. |
+| `greenscreen-to-ai-plate-comp` | Green-screen talent into a generated location: Ad Multiplier merge vs raw key over an animated, depth-blurred plate. |
+| `higgsfield-production-routing` | Which Higgsfield model for which production job, MCP call patterns, refusals, and what failed. |
+| `lip-sync-and-gaze-qc` | Measure lip lag (mouth vs voice xcorr) and gaze (iris position); pick clip windows; gaze and mouth-only lip-sync fixes. |
+| `performance-voice-conversion` | Convert an actor's original performance into a consenting target voice (Seed-VC), word-warp new words, measured phone EQ. |
+| `person-into-famous-scene` | Put a consenting person into a famous scene: identity-edited stills, image-to-video, composite over the edit's own plates. |
+| `remote-gpu-render` | Run FaceFusion / ESRGAN / Seed-VC on a Windows RTX box over a reverse SSH tunnel; CUDA gotchas; verify from output. |
+| `video-qc-reviewer` | Fresh-eyes frame-by-frame QC: machine checks, every-3rd-frame sheets, client-zoom crops, severity-ranked findings table. |
 
 </details>
 

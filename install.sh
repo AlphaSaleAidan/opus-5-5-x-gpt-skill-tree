@@ -4,7 +4,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 mkdir -p ~/.claude/skills ~/.agents/skills
 for d in skills/*/; do n=$(basename "$d"); rm -rf ~/.claude/skills/"$n" ~/.agents/skills/"$n"; cp -R "$d" ~/.claude/skills/"$n"; cp -R "$d" ~/.agents/skills/"$n"; done
-echo "Copied 216 included skills."
+echo "Copied $(ls -d skills/*/ | wc -l) included skills."
 # Skills whose licenses do not allow redistribution: pulled from the official repos.
 npx -y skills add anthropics/skills -g -y -a claude-code codex -s frontend-design -s skill-creator -s webapp-testing
 npx -y skills add openai/skills -g -y -a codex -s chatgpt-apps -s cli-creator -s define-goal -s gh-address-comments -s gh-fix-ci -s jupyter-notebook -s playwright -s playwright-interactive -s render-deploy -s screenshot -s security-best-practices -s security-ownership-map -s security-threat-model -s speech -s transcribe
