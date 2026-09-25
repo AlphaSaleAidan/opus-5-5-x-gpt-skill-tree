@@ -43,6 +43,14 @@ Strategy, marketing, SEO analysis, Vapi, Shippo and n8n skills are switched OFF 
 | **Process spine** (any build) | `brainstorming` → `writing-plans` → `executing-plans` / `subagent-driven-development` → `verification-before-completion` |
 | Keep a build minimal / audit bloat | `ponytail` / `ponytail-review` / `ponytail-audit` |
 | Edit real footage (cut/transcribe/grade/subtitle) | `video-use` |
+| Client commercial / spot / video deliverable end to end | `commercial-production-pipeline` (gates) + `credit-discipline-for-generation` before any spend |
+| Put a person into a famous scene (face + voice + lip-sync) | `person-into-famous-scene` → `performance-voice-conversion`, `lip-sync-and-gaze-qc` |
+| Rebuild a fan edit from clean sources (music sync, cadence, grade) | `edit-rebuild-from-clean-sources` |
+| Green-screen talent into a built/generated location | `blender-set-from-storyboard` → `greenscreen-to-ai-plate-comp` |
+| Which Higgsfield model / MCP call for a production job | `higgsfield-production-routing` |
+| Wrong logo on an AI clip / beat accents in a montage | `ai-video-logo-replace` / `beat-synced-overlays` |
+| GPU passes (FaceFusion, ESRGAN 4K, Seed-VC) on a remote RTX box | `remote-gpu-render` |
+| QC a video before it goes to a client | `video-qc-reviewer` (fresh-context reviewer) |
 | **HTML-first video** (promo, explainer, captions, slideshow) | `hyperframes` (router) → `product-launch-video` / `faceless-explainer` / `motion-graphics` / `embedded-captions` |
 | **AI media generation** (image/video/3D/audio) | `higgsfield-generate` / `higgsfield-product-photoshoot` / `higgsfield-marketplace-cards` — cost-quote first |
 | **Programmatic video / launch clip from a site** | `remotion-*` (create/render/captions/studio…), `brag` for a launch video |
